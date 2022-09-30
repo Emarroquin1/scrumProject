@@ -4,12 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   
 <link rel="stylesheet" type="text/css" href="css.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+ <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrfxtzqDPl9vK1CtcuKwui1u3QMTdEt5g"></script>
     
 
     
@@ -23,6 +43,42 @@ function Buscar(){
 }
 
 
+$(document).ready(function(){
+
+    var initialLat = $('.search_latitude').val();
+            var initialLong = $('.search_longitude').val();
+            initialLat = initialLat?initialLat:13.794185;
+            initialLong = initialLong?initialLong:-88.89653;
+
+            var latlng = new google.maps.LatLng(initialLat, initialLong);
+     var mapOptions = {
+    center: latlng,
+    zoom: 8
+};
+var map = new google.maps.Map(document.getElementById('mapa-canvas'), mapOptions);
+
+geocoder = new google.maps.Geocoder();
+        
+            marker = new google.maps.Marker({
+                map: map,
+                draggable: true,
+                position: latlng
+            });
+        
+            google.maps.event.addListener(marker, "dragend", function () {
+                var point = marker.getPosition();
+                map.panTo(point);
+                geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        map.setCenter(results[0].geometry.location);
+                        marker.setPosition(results[0].geometry.location);
+                        $('.search_addr').val(results[0].formatted_address);
+                        $('.search_latitude').val(marker.getPosition().lat());
+                        $('.search_longitude').val(marker.getPosition().lng());
+                    }
+                });
+            });
+        })
 </script>
 
 <body style="background-color:  #D4AF37;">   
@@ -63,8 +119,64 @@ function Buscar(){
     
     
     </div>
+<div>
 
-<h2>Hola</h2>
+</div>
+
+<div class="contenido">
+<table class="table table-bordered">
+    <thead class="thead-dark">
+
+        <th>
+            Datos de la empresa
+                </th>
+
+    </thead>
+ 
+    <tr>
+        <td>
+            Dirección: 3av sur casa#3 barrio la cruz san sansalvador 
+        </td>
+  
+    </tr>
+    <tr>
+        <td>
+            Numero de telefono:  +503 7254 2341
+
+        </td>
+   
+    </tr>
+
+    <tr>
+
+       <td>
+        Correo electronico: tusuperProductoss@itca.edu.sv
+       </td>
+    </tr>
+
+</table>
+
+<table class="table">
+    <thead class="thead-light">
+
+        <th>
+            Mapa de nuestra sucursal
+                </th>
+
+    </thead>
+</table>
+
+
+<div id='mapa-canvas'></div>
+    
+
+</div>
+
+<div id="contenidoContacFooter">
+
+    <h3>Redes sociales:   <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Twitter-logo.svg/512px-Twitter-logo.svg.png"></h3> 
+</div>
+
 
 </div>
 
