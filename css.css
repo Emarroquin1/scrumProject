@@ -1,7 +1,7 @@
-.container-fluid{
+.content{
 
-    background-color: #D4AF37
-    ;
+    background-color: #D4AF37;
+
 }
 
 .cuerpo{
@@ -12,7 +12,7 @@
 #divImg{
 
 text-align: center;
-padding-bottom: 45%;
+top: 25%;
 
 }
 
